@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color: #222426;
+  }
+
+  body {
+    background-color: #FAF8F3;
+    color: #222426;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, .font-serif-luxury {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+@layer components {
+  /* Primary Button Token */
+  .btn-primary {
+    @apply inline-flex items-center justify-center font-semibold text-white bg-primary hover:bg-primary-hover active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none transition-all duration-fast rounded-button h-12 px-6 text-sm tracking-wide shadow-sm;
+  }
+
+  /* Secondary Button Token */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center font-semibold text-charcoal bg-white hover:bg-softNeutral border border-borderNeutral active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none transition-all duration-fast rounded-button h-12 px-6 text-sm;
+  }
+
+  /* Outline Button Token */
+  .btn-outline-primary {
+    @apply inline-flex items-center justify-center font-semibold text-primary hover:bg-primary-light border border-primary active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none transition-all duration-fast rounded-button h-12 px-6 text-sm;
+  }
+
+  /* Input Field Token */
+  .input-field {
+    @apply w-full h-11 sm:h-12 px-3.5 sm:px-4 bg-white border border-borderNeutral rounded-button text-charcoal placeholder:text-mutedGrey/70 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all text-sm;
+  }
+
+  /* Jewellery Product Card */
+  .card-jewellery {
+    @apply bg-white border border-borderNeutral rounded-card overflow-hidden transition-all duration-fast hover:shadow-card hover:-translate-y-0.5;
+  }
+
+  /* Luxury Section Gutters */
+  .section-container {
+    @apply max-w-site mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Badge Styles */
+  .badge-sale {
+    @apply bg-accent text-white text-[11px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded;
+  }
+
+  .badge-featured {
+    @apply bg-primary/10 text-primary border border-primary/20 text-[11px] font-semibold tracking-wider uppercase px-2.5 py-1 rounded;
+  }
+
+  .badge-neutral {
+    @apply bg-softNeutral text-charcoal/80 border border-borderNeutral text-[11px] font-medium tracking-wider uppercase px-2.5 py-1 rounded;
+  }
+}
+
+/* Accessible focus ring */
+:focus-visible {
+  outline: 2px solid #16894F;
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

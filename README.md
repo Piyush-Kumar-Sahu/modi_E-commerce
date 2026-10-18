@@ -59,3 +59,22 @@ The web application will launch at `http://localhost:5173/`.
 ```bash
 npm run build
 ```
+
+## Render Static Site Deployment & SPA Routing
+
+When deploying to Render as a **Static Site**:
+- **Build Command**: `npm run build`
+- **Publish Directory**: `dist`
+
+### SPA Rewrites for Page Refreshes & Nested Routes
+Single Page Applications (SPAs) require all route requests to be rewritten to `/index.html` so React Router can handle routing on the client side:
+- **Automatic via `_redirects`**: The [`public/_redirects`](public/_redirects) file is automatically copied to `dist/_redirects` during `npm run build` with the rule:
+  ```text
+  /*    /index.html   200
+  ```
+- **Render Dashboard Settings**: Under your Static Site in Render, go to **Redirects/Rewrites** and verify or add:
+  - **Source**: `/*`
+  - **Destination**: `/index.html`
+  - **Action**: `Rewrite`
+
+This ensures that refreshing or directly opening nested URLs (e.g. `/login`, `/register`, `/catalogue`, `/product/:slug`, `/cart`, `/checkout`, `/account`, and `/admin/*`) serves `index.html` with status 200 rather than a 404 error.

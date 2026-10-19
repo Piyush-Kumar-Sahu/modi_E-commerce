@@ -39,7 +39,7 @@ export const ResetPasswordPage: React.FC = () => {
       })
       .catch((err) => {
         setIsTokenValid(false);
-        setErrorMessage(err.message || 'This password reset link is invalid or has expired.');
+        setErrorMessage(err.userMessage || err.message || 'This password reset link is invalid or has expired.');
       })
       .finally(() => {
         setIsValidating(false);
@@ -71,7 +71,7 @@ export const ResetPasswordPage: React.FC = () => {
       });
       setIsSuccess(true);
     } catch (err: any) {
-      setErrorMessage(err.message || 'Failed to reset password. The link may have expired.');
+      setErrorMessage(err.userMessage || err.message || 'Failed to reset password. The link may have expired.');
     } finally {
       setIsLoading(false);
     }

@@ -67,7 +67,7 @@ export const ForgotPasswordPage: React.FC = () => {
       setStep('OTP');
     } catch (err: any) {
       setErrorMessage(
-        err.message || 'Failed to dispatch verification code. Please verify email and try again.'
+        err.userMessage || err.message || 'Failed to dispatch verification code. Please verify email and try again.'
       );
     } finally {
       setIsLoading(false);
@@ -97,7 +97,7 @@ export const ForgotPasswordPage: React.FC = () => {
       }
     } catch (err: any) {
       setErrorMessage(
-        err.message || 'Verification failed. Please check the code or request a fresh one.'
+        err.userMessage || err.message || 'Verification failed. Please check the code or request a fresh one.'
       );
     } finally {
       setIsLoading(false);
@@ -117,7 +117,7 @@ export const ForgotPasswordPage: React.FC = () => {
       setSuccessInfo(res.message || 'A fresh verification code has been dispatched.');
       setCooldown(res.retry_after || 60);
     } catch (err: any) {
-      setErrorMessage(err.message || 'Could not resend code. Please wait before retrying.');
+      setErrorMessage(err.userMessage || err.message || 'Could not resend code. Please wait before retrying.');
     } finally {
       setIsLoading(false);
     }
@@ -154,7 +154,7 @@ export const ForgotPasswordPage: React.FC = () => {
       }
     } catch (err: any) {
       setErrorMessage(
-        err.message || 'Failed to reset password. The recovery session may have expired.'
+        err.userMessage || err.message || 'Failed to reset password. The recovery session may have expired.'
       );
     } finally {
       setIsLoading(false);

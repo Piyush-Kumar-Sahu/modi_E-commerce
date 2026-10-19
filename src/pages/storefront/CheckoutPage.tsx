@@ -119,7 +119,7 @@ export const CheckoutPage: React.FC = () => {
         });
       }
     } catch (err: any) {
-      setErrorMessage(err.message || 'We could not complete your order submission. Please review the details.');
+      setErrorMessage(err.userMessage || err.message || 'We could not complete your order submission. Please review the details.');
     } finally {
       setIsSubmitting(false);
     }

@@ -38,14 +38,20 @@ export const LoginPage: React.FC = () => {
         navigate(from || '/account', { replace: true });
       }
     } catch (err: any) {
-      const code = err.data?.code || err.data?.detail?.code;
-      const message = err.message || 'Invalid email or password. Please verify your credentials.';
+      const code = err.code || err.data?.code || err.data?.detail?.code;
+      const rawMsg = err.userMessage || err.message || '';
+      const isUnverifiedError =
+        err.isUnverified ||
+        code === 'email_not_verified' ||
+        rawMsg.toLowerCase().includes('verify your email') ||
+        rawMsg.toLowerCase().includes('email verification is required') ||
+        rawMsg.toLowerCase().includes('email not verified');
       
-      if (code === 'email_not_verified' || message.toLowerCase().includes('verify your email')) {
+      if (isUnverifiedError) {
         setIsUnverified(true);
-        setErrorMessage('Your email address has not been verified yet. Please enter the OTP sent to your inbox.');
+        setErrorMessage('Please verify your email address before signing in. Check your inbox for the verification code.');
       } else {
-        setErrorMessage(message);
+        setErrorMessage(rawMsg || 'Invalid email or password. Please verify your credentials and try again.');
       }
     } finally {
       setIsLoading(false);

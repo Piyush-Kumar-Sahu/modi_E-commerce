@@ -56,7 +56,11 @@ export const RegisterPage: React.FC = () => {
       // Redirect directly to the Email OTP Verification page
       navigate(`/verify-email?email=${encodeURIComponent(res.email || email.trim())}`);
     } catch (err: any) {
-      setErrorMessage(err.message || 'Registration failed. Please check your details and try again.');
+      const emailErr = err.errors?.email?.[0];
+      const passwordErr = err.errors?.password?.[0] || err.errors?.password_confirm?.[0];
+      const phoneErr = err.errors?.phone_number?.[0];
+      const fallbackMsg = err.userMessage || err.message || 'Registration failed. Please check your details and try again.';
+      setErrorMessage(emailErr || passwordErr || phoneErr || fallbackMsg);
     } finally {
       setIsLoading(false);
     }

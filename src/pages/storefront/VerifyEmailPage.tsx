@@ -111,7 +111,8 @@ export const VerifyEmailPage: React.FC = () => {
         navigate('/account');
       }, 1500);
     } catch (err: any) {
-      setErrorMessage(err.message || 'Verification failed. Please check the code and try again.');
+      const errorMsg = err.errors?.otp?.[0] || err.userMessage || err.message || 'Verification failed. Please check the code and try again.';
+      setErrorMessage(errorMsg);
     } finally {
       setIsLoading(false);
     }
@@ -135,10 +136,10 @@ export const VerifyEmailPage: React.FC = () => {
       setOtpDigits(['', '', '', '', '', '']);
       inputRefs.current[0]?.focus();
     } catch (err: any) {
-      if (err.data?.retry_after) {
-        setResendCooldown(err.data.retry_after);
+      if (err.data?.retry_after || err.errors?.retry_after) {
+        setResendCooldown(err.data?.retry_after || err.errors?.retry_after);
       }
-      setErrorMessage(err.message || 'Failed to resend code. Please try again in a few moments.');
+      setErrorMessage(err.userMessage || err.message || 'Failed to resend code. Please try again in a few moments.');
     } finally {
       setIsResending(false);
     }

@@ -67,14 +67,15 @@ When deploying to Render as a **Static Site**:
 - **Publish Directory**: `dist`
 
 ### SPA Rewrites for Page Refreshes & Nested Routes
-Single Page Applications (SPAs) require all route requests to be rewritten to `/index.html` so React Router can handle routing on the client side:
-- **Automatic via `_redirects`**: The [`public/_redirects`](public/_redirects) file is automatically copied to `dist/_redirects` during `npm run build` with the rule:
-  ```text
-  /*    /index.html   200
-  ```
-- **Render Dashboard Settings**: Under your Static Site in Render, go to **Redirects/Rewrites** and verify or add:
-  - **Source**: `/*`
-  - **Destination**: `/index.html`
-  - **Action**: `Rewrite`
+Single Page Applications (SPAs) require all route requests to be rewritten to `/index.html` so React Router can handle client-side routing on page refresh:
+- **Render Dashboard Settings (Required for Existing Static Sites)**:
+  1. Open your Render Dashboard and select `modi-e-commerce`.
+  2. In the left navigation, click **Redirects / Rewrites** (or **Settings** > **Redirects and Rewrites**).
+  3. Click **Add Rule**:
+     - **Type**: `Rewrite`
+     - **Source**: `/*`
+     - **Destination**: `/index.html`
+  4. Click **Save Changes**.
+- **Blueprint Automation**: Defined in [`render.yaml`](render.yaml) for infrastructure-as-code deployments.
+- *Note on `_redirects`*: Unlike Netlify or Cloudflare Pages, Render Static Sites do **not** automatically process `_redirects` files. The Rewrite rule above is required for direct URL navigation and browser refreshes on routes like `/login`, `/shop`, `/cart`, and `/admin`.
 
-This ensures that refreshing or directly opening nested URLs (e.g. `/login`, `/register`, `/catalogue`, `/product/:slug`, `/cart`, `/checkout`, `/account`, and `/admin/*`) serves `index.html` with status 200 rather than a 404 error.

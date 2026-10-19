@@ -117,16 +117,24 @@ export const AdminSettingsPage: React.FC = () => {
     }
   };
 
-  const handleExportOrders = () => {
-    const token = localStorage.getItem('modiecommers_access_token');
-    window.open(`http://localhost:8000/api/v1/admin-ops/export/orders-csv/?token=${token || ''}`, '_blank');
-    showToast('Exporting orders CSV...', 'info');
+  const handleExportOrders = async () => {
+    try {
+      showToast('Exporting orders CSV...', 'info');
+      await adminApi.exportOrdersCSV();
+      showToast('Orders CSV downloaded successfully', 'success');
+    } catch (err: any) {
+      showToast(err.message || 'Failed to export orders CSV', 'error');
+    }
   };
 
-  const handleExportProducts = () => {
-    const token = localStorage.getItem('modiecommers_access_token');
-    window.open(`http://localhost:8000/api/v1/admin-ops/export/products-csv/?token=${token || ''}`, '_blank');
-    showToast('Exporting products CSV...', 'info');
+  const handleExportProducts = async () => {
+    try {
+      showToast('Exporting products CSV...', 'info');
+      await adminApi.exportProductsCSV();
+      showToast('Products catalog CSV downloaded successfully', 'success');
+    } catch (err: any) {
+      showToast(err.message || 'Failed to export products CSV', 'error');
+    }
   };
 
   return (

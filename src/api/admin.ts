@@ -169,4 +169,31 @@ export const adminApi = {
   getAuditLogs: async () => {
     return apiRequest<{ success: boolean; results: any[] }>('/admin-ops/audit-logs/');
   },
+
+  // CSV Exports
+  exportOrdersCSV: async () => {
+    const csvContent = await apiRequest<string>('/admin-ops/export/orders-csv/');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `modiecommers_orders_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  },
+
+  exportProductsCSV: async () => {
+    const csvContent = await apiRequest<string>('/admin-ops/export/products-csv/');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `modiecommers_catalog_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  },
 };

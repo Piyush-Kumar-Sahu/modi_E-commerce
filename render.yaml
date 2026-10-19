@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: modi-e-commerce
+    runtime: static
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://e-commere-backend.onrender.com/api/v1
+      - key: VITE_STORE_NAME
+        value: Modiecommers Fine Jewellery
+      - key: VITE_DEMO_MODE
+        value: "true"
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

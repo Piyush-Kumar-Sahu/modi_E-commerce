@@ -69,8 +69,9 @@ export const ProductDetailPage: React.FC = () => {
         // Load reviews
         reviewsApi.getProductReviews(slug).then(setReviews).catch(() => {});
         // Load related
-        if (data.category_slug) {
-          catalogueApi.getProducts({ category: data.category_slug, page_size: 4 }).then((rel) => {
+        const catSlug = data.category_slug || data.category?.slug;
+        if (catSlug) {
+          catalogueApi.getProducts({ category: catSlug, page_size: 4 }).then((rel) => {
             setRelatedProducts(rel.results.filter((p) => p.id !== data.id));
           });
         }
